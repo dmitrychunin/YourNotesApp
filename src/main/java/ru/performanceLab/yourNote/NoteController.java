@@ -29,9 +29,10 @@ public abstract class NoteController {
 
     @GetMapping("/yourNote/{userName}")
     public ModelAndView getNotes(@PathVariable(value = "userName") String userName) {
+        /*TODO: убрать дублируемую проверку на закрытие сессии*/
         sessionBean = getSession(userName);
         if (!sessionBean.isOpen()) {
-            return new ModelAndView("index", new ModelMap());
+            return showStartPage();
         }
 
         ModelMap model = new ModelMap();
@@ -55,7 +56,7 @@ public abstract class NoteController {
         noteDao.createEmptyNote(userName, noteName);
         return getNotes(userName);
     }
-    
+
     /*TODO: знак = добавляется при редактировании*/
     @GetMapping("/yourNote/{userName}/delete")
     public ModelAndView deleteNote(@PathVariable(value = "userName") String userName,

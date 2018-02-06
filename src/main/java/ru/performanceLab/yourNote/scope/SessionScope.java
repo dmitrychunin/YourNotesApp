@@ -15,6 +15,7 @@ public class SessionScope implements Scope {
             = Collections.synchronizedMap(new HashMap<>());
     private Map<String, Runnable> destructionCallbacks
             = Collections.synchronizedMap(new HashMap<>());
+    private final Integer TIME_TO_LIVE = 15;
 
 
     @Override
@@ -31,7 +32,7 @@ public class SessionScope implements Scope {
 
         LocalTime beanStart = LocalTime.ofSecondOfDay(scopedObjects.get(userName).getBeanStart());
         LocalTime now = LocalTime.now();
-//        if (Duration.between(beanStart, now).toMinutes() < 15) {
+//        if (Duration.between(beanStart, now).toMinutes() < TIME_TO_LIVE) {
         if (Duration.between(beanStart, now).toMillis() < 4000) {
             return scopedObjects.get(userName);
         } else {
