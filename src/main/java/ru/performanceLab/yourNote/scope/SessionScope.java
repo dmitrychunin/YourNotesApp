@@ -2,7 +2,6 @@ package ru.performanceLab.yourNote.scope;
 
 import org.springframework.beans.factory.ObjectFactory;
 import org.springframework.beans.factory.config.Scope;
-import org.springframework.data.util.Pair;
 
 import java.time.Duration;
 import java.time.LocalTime;
@@ -12,44 +11,45 @@ import java.util.Map;
 
 public class SessionScope implements Scope {
 
-    private Map<String, Pair<LocalTime,Object>> scopedObjects
+    private Map<String, SessionBean> scopedObjects
             = Collections.synchronizedMap(new HashMap<>());
     private Map<String, Runnable> destructionCallbacks
             = Collections.synchronizedMap(new HashMap<>());
 
 
     @Override
-    public Object get(String name, ObjectFactory<?> objectFactory) {
+    public SessionBean get(String name, ObjectFactory<?> objectFactory) {
         //не содержит - создаем
         //содержит но больше 15 - удаляем
         //содержит но меньше 15 - отдаем
-        if(!scopedObjects.containsKey(name)) {
-            Pair<LocalTime, Object> pair = Pair.of(LocalTime.now(), objectFactory.getObject());
-            scopedObjects.put(name, pair);
-            return pair.getSecond();
+        SessionBean sessionBean = (SessionBean) objectFactory.getObject();
+        String userName = sessionBean.getUserName();
+        if (!scopedObjects.containsKey(userName)) {
+            scopedObjects.put(userName, sessionBean);
+            return sessionBean;
         }
 
-        LocalTime beanStart = scopedObjects.get(name).getFirst();
+        LocalTime beanStart = LocalTime.ofSecondOfDay(scopedObjects.get(userName).getBeanStart());
         LocalTime now = LocalTime.now();
-//        if (Duration.between(beanStart, now).toMinutes() < 15) {
-        if (Duration.between(beanStart, now).toMillis() < 4000) {
-            return scopedObjects.get(name).getSecond();
-
+        if (Duration.between(beanStart, now).toMinutes() < 15) {
+//        if (Duration.between(beanStart, now).toMillis() < 4000) {
+            return scopedObjects.get(userName);
         } else {
-            scopedObjects.remove(name);
-            return null;
+            SessionBean removedBean = scopedObjects.remove(userName);
+            removedBean.setSessionOpen(false);
+            return removedBean;
         }
     }
 
     @Override
-    public Object remove(String name) {
-        destructionCallbacks.remove(name);
-        return scopedObjects.remove(name);
+    public Object remove(String userName) {
+        destructionCallbacks.remove(userName);
+        return scopedObjects.remove(userName);
     }
 
     @Override
-    public void registerDestructionCallback(String name, Runnable callback) {
-        destructionCallbacks.put(name, callback);
+    public void registerDestructionCallback(String userName, Runnable callback) {
+        destructionCallbacks.put(userName, callback);
     }
 
     @Override
