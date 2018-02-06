@@ -18,12 +18,12 @@ public class SessionScope implements Scope {
 
 
     @Override
-    public SessionBean get(String name, ObjectFactory<?> objectFactory) {
+    public SessionBean get(String userName, ObjectFactory<?> objectFactory) {
         //не содержит - создаем
         //содержит но больше 15 - удаляем
         //содержит но меньше 15 - отдаем
         SessionBean sessionBean = (SessionBean) objectFactory.getObject();
-        String userName = sessionBean.getUserName();
+        userName = sessionBean.getUserName();
         if (!scopedObjects.containsKey(userName)) {
             scopedObjects.put(userName, sessionBean);
             return sessionBean;
@@ -31,8 +31,8 @@ public class SessionScope implements Scope {
 
         LocalTime beanStart = LocalTime.ofSecondOfDay(scopedObjects.get(userName).getBeanStart());
         LocalTime now = LocalTime.now();
-        if (Duration.between(beanStart, now).toMinutes() < 15) {
-//        if (Duration.between(beanStart, now).toMillis() < 4000) {
+//        if (Duration.between(beanStart, now).toMinutes() < 15) {
+        if (Duration.between(beanStart, now).toMillis() < 4000) {
             return scopedObjects.get(userName);
         } else {
             SessionBean removedBean = scopedObjects.remove(userName);

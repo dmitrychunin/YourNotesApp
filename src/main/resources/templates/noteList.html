@@ -10,8 +10,19 @@
 
         //frontend handlers
         function addNewNote() {
-            ajaxRestRequest(window.location + "/add?noteName=" +
-                $("input[name=noteName]" ).val());
+            var isNoteNameNotDoubled = true;
+            var newNoteName = $("input[name=noteName]" ).val();
+
+            $("div#noteList span.noteName").each(function( index ) {
+                console.log( index + ": " + $( this ).text() );
+                if ($( this ).text() === newNoteName) {
+                    alert("Дублированное название заметки, пожалуйста, выберите другое название");
+                    isNoteNameNotDoubled = false;
+                }
+            });
+            if (isNoteNameNotDoubled) {
+                ajaxRestRequest(window.location + "/add?noteName=" + newNoteName);
+            }
         }
         function deleteNote() {
             var selectedText =  $(".selected span.noteName").text().trim();

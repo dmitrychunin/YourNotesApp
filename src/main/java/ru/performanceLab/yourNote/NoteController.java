@@ -55,8 +55,7 @@ public abstract class NoteController {
         noteDao.createEmptyNote(userName, noteName);
         return getNotes(userName);
     }
-
-    /*TODO: NON UNIQUE NOTE IN ONE USER*/
+    
     /*TODO: знак = добавляется при редактировании*/
     @GetMapping("/yourNote/{userName}/delete")
     public ModelAndView deleteNote(@PathVariable(value = "userName") String userName,
