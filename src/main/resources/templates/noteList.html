@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Hello Thymeleaf!</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <!--TODO:вынести в отдельный файлы-->
+    <script type="application/javascript">
+        //<![CDATA[
+
+        //frontend handlers
+        function addNewNote() {
+            ajaxRestRequest(window.location + "/add?noteName=" +
+                $("input[name=noteName]" ).val());
+        }
+        function deleteNote() {
+            var selectedText =  $(".selected span.noteName").text().trim();
+            console.log(selectedText);
+            ajaxRestRequest(window.location + "/delete?noteName=" + selectedText);
+        }
+        function editNote() {
+            /*TODO: пробелы в тексте и убрать добавление знака равно в конце*/
+            var txt = $("#selectedNoteText").val();
+
+            $.ajax({
+                type: "POST",
+                dataType: "text",
+                data: txt,
+                url: window.location + "/edit/" + $(".selected > .noteName").text(),
+                success: function(data) {
+                    location.reload();
+                },
+                error: function (data) {
+                    alert("error");
+                }
+            });
+        }
+        function searchNoteByName() {
+            var searchRequest = $("#searchedNoteName").val();
+            $( "span.noteName:not(:contains(\'" + searchRequest + "\'))" ).css( "display", "none" );
+        }
+
+        //service functions
+        function ajaxRestRequest(resourceLocation) {
+            $.ajax({
+                type: "GET",
+                url: resourceLocation,
+                success: function(data) {
+                    location.reload();
+                },
+                error: function (data) {
+                    alert("error");
+                }
+            });
+        }
+        function markAsSelected(el) {
+            if ($(el).attr("class") === "selected") {
+                $(el).removeClass("selected");
+            } else {
+                /*TODO: убрать эту проверку только на редактирование и реализовать обработку удаления нескольких заметок*/
+                if($(".selected").size() > 0) {
+                    alert("Выделение нескольких заметок запрещено!")
+                }
+                else {
+                    $(el).addClass("selected");
+                    var selectedNoteText = $(".selected > .noteText" ).text();
+                    $("#selectedNoteText").val(selectedNoteText);
+                }
+            }
+        }
+        //]]>
+    </script>
+    <style>
+        .selected {
+            background-color: red;
+        }
+    </style>
+</head>
+<body>
+<form  action="/" id="addForm">
+    <input id="add" type="button" value="add" onclick="addNewNote()"/>
+    <input type="text" name="noteName" value="newNote" required="true"/>
+</form>
+<input id="delete" type="button" value="delete" onclick="deleteNote()"/>
+<input id="edit" type="button" value="edit" onclick="editNote()"/>
+<form  action="/" id="searchForm">
+    <input id="search" type="button" value="search" onclick="searchNoteByName()"/>
+    <input type="text" id="searchedNoteName" value="note1" required="true"/>
+</form>
+<div id="noteList" >
+    <div th:each="note : ${noteList}" onclick="markAsSelected(this)">
+        <span class="noteName" th:text="${note.name}"></span>
+        <span class="noteText" style="display: none" th:text="${note.text}"></span>
+    </div>
+</div>
+<textarea id="selectedNoteText" cols="40" rows="3"></textarea>
+</body>
+</html>

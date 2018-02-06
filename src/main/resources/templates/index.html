@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Hello jQuery</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script type="application/javascript">
+        function restRequest() {
+            window.open("http://localhost:8080/yourNote/" +
+                $( "input[name=name]" ).val(),"_self");
+        }
+    </script>
+</head>
+
+<body>
+<form action="/" id="authForm">
+    <input type="text" name="name" value="default"/>
+    <input id="button" type="button" value="START" onclick="restRequest()"/>
+</form>
+</body>
+</html>
