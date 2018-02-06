@@ -1,36 +1,23 @@
 package ru.performanceLab.yourNote.model;
 
-import org.hibernate.validator.constraints.NotBlank;
-
 import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
 @Table(name = "note")
-public class Note  implements Serializable {
+public class Note implements Serializable {
 
+    @Column(name = "name")
+    public String name;
+    @Column(name = "text")
+    public String text;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "note_id")
     private Long id;
-
-    public Long getId() {
-        return id;
-    }
-
     @ManyToOne
-    @JoinColumn(name="user_id", nullable=false)
-//    @JoinColumns({
-//            @JoinColumn(name = "name", insertable = false, updatable = false),
-//            @JoinColumn(name = "text", insertable = false, updatable = false)
-//    })
+    @JoinColumn(name = "user_id", nullable = false)
     private User user;
-
-    @Column(name = "name")
-    public String name;
-
-    @Column(name = "text")
-    public String text;
 
     public Note(User user, String name, String text) {
         this.user = user;
@@ -38,17 +25,22 @@ public class Note  implements Serializable {
         this.text = text;
     }
 
-    public Note(){}
+    public Note() {
+    }
+
+    public Long getId() {
+        return id;
+    }
 
     public void setNoteText(String text) {
         this.text = text;
     }
 
-    public void setNoteName(String name) {
-        this.name = name;
-    }
-
     public String getNoteName() {
         return name;
+    }
+
+    public void setNoteName(String name) {
+        this.name = name;
     }
 }
