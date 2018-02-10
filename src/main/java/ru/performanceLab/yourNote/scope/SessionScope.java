@@ -2,21 +2,35 @@ package ru.performanceLab.yourNote.scope;
 
 import org.springframework.beans.factory.ObjectFactory;
 import org.springframework.beans.factory.config.Scope;
+import ru.performanceLab.yourNote.mbean.SessionTimeOutController;
 
+import javax.management.*;
+import java.lang.management.ManagementFactory;
 import java.time.Duration;
 import java.time.LocalTime;
+import java.time.temporal.ChronoUnit;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
 public class SessionScope implements Scope {
 
+    private final SessionTimeOutController sessionTimeOutController;
     private Map<String, SessionBean> scopedObjects
             = Collections.synchronizedMap(new HashMap<>());
     private Map<String, Runnable> destructionCallbacks
             = Collections.synchronizedMap(new HashMap<>());
-    private final Integer TIME_TO_LIVE = 15;
 
+    public SessionScope() {
+        sessionTimeOutController = new SessionTimeOutController(15, ChronoUnit.MINUTES.name());
+
+        MBeanServer server = ManagementFactory.getPlatformMBeanServer();
+        try {
+            server.registerMBean(sessionTimeOutController, new ObjectName("appControllers", "name", "sessionTimeOut"));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     @Override
     public SessionBean get(String userName, ObjectFactory<?> objectFactory) {
@@ -32,8 +46,8 @@ public class SessionScope implements Scope {
 
         LocalTime beanStart = LocalTime.ofSecondOfDay(scopedObjects.get(userName).getBeanStart());
         LocalTime now = LocalTime.now();
-        if (Duration.between(beanStart, now).toMinutes() < TIME_TO_LIVE) {
-//        if (Duration.between(beanStart, now).toMillis() < 4000) {
+        if (Duration.between(beanStart, now).compareTo(
+                Duration.of(sessionTimeOutController.getAmount(), sessionTimeOutController.getUnit())) < 0) {
             return scopedObjects.get(userName);
         } else {
             SessionBean removedBean = scopedObjects.remove(userName);
