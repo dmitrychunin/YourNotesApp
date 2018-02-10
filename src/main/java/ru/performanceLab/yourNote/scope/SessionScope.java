@@ -32,8 +32,8 @@ public class SessionScope implements Scope {
 
         LocalTime beanStart = LocalTime.ofSecondOfDay(scopedObjects.get(userName).getBeanStart());
         LocalTime now = LocalTime.now();
-//        if (Duration.between(beanStart, now).toMinutes() < TIME_TO_LIVE) {
-        if (Duration.between(beanStart, now).toMillis() < 4000) {
+        if (Duration.between(beanStart, now).toMinutes() < TIME_TO_LIVE) {
+//        if (Duration.between(beanStart, now).toMillis() < 4000) {
             return scopedObjects.get(userName);
         } else {
             SessionBean removedBean = scopedObjects.remove(userName);

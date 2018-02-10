@@ -1,7 +1,5 @@
 package ru.performanceLab.yourNote.service.dao;
 
-import org.hibernate.SessionFactory;
-import org.hibernate.cfg.Configuration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.performanceLab.yourNote.model.Note;
@@ -13,16 +11,6 @@ import java.util.List;
 
 @Service
 public class NoteDao {
-
-    private static final SessionFactory sessionFactory;
-
-    static {
-        try {
-            sessionFactory = new Configuration().configure("hibernate.cfg.xml").buildSessionFactory();
-        } catch (Throwable ex) {
-            throw new ExceptionInInitializerError(ex);
-        }
-    }
 
     @Autowired
     private NoteRepository noteRepository;
