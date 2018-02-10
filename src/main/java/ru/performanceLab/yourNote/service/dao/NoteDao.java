@@ -21,8 +21,8 @@ public class NoteDao {
         return userRepository.findByName(name);
     }
 
-    public List<Note> findNotesByUserId(Long id) {
-        return noteRepository.findNotesByUserId(id);
+    public List<Note> findNotesByUser(User user) {
+        return noteRepository.findNotesByUser(user);
     }
 
     public Note createEmptyNote(String userName, String noteName) {
@@ -43,7 +43,7 @@ public class NoteDao {
 
     private Note getNote(String userName, String noteName) {
         User user = userRepository.findByName(userName);
-        Note note = noteRepository.findByUserIdAndNoteName(user.getId(), noteName);
+        Note note = noteRepository.findNoteByUserAndName(user, noteName);
         return note;
     }
 }

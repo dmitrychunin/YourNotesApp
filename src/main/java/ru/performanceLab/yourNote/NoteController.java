@@ -41,7 +41,7 @@ public abstract class NoteController {
             user = userDao.create(userName);
         }
 
-        model.addAttribute("noteList", noteDao.findNotesByUserId(user.getId()));
+        model.addAttribute("noteList", noteDao.findNotesByUser(user));
         return new ModelAndView("noteList", model);
     }
 
