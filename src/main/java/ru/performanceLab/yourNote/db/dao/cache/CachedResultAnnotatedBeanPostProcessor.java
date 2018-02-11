@@ -54,11 +54,11 @@ public class CachedResultAnnotatedBeanPostProcessor implements BeanPostProcessor
             }
 
             String cacheKey = Arrays.toString(args);
-            Object result = cache.getNote(cacheKey);
+            Object result = cache.getValue(cacheKey);
 
             if (result == null) {
                 result = method.invoke(bean, args);
-                cache.addNote(cacheKey, result);
+                cache.putValue(cacheKey, result);
             }
             return result;
         };
