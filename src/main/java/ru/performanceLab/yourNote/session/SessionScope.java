@@ -1,8 +1,8 @@
-package ru.performanceLab.yourNote.scope;
+package ru.performanceLab.yourNote.session;
 
 import org.springframework.beans.factory.ObjectFactory;
 import org.springframework.beans.factory.config.Scope;
-import ru.performanceLab.yourNote.mbean.SessionTimeOutController;
+import ru.performanceLab.yourNote.session.mbean.SessionTimeOutController;
 
 import javax.management.*;
 import java.lang.management.ManagementFactory;

@@ -1,4 +1,4 @@
-package ru.performanceLab.yourNote.service.dao;
+package ru.performanceLab.yourNote.db.dao.cache;
 
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,9 +8,7 @@ import org.springframework.stereotype.Service;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class CachedResultAnnotatedBeanPostProcessor implements BeanPostProcessor {
@@ -71,5 +69,26 @@ public class CachedResultAnnotatedBeanPostProcessor implements BeanPostProcessor
                 originalClass.getInterfaces(),
                 noteDaoCacheProxy);
         return proxyBean;
+    }
+
+    private static class ClassInfoContainer {
+        private Class classObj;
+        private List<Method> methods = new ArrayList<>();
+
+        public Class getClassObj() {
+            return classObj;
+        }
+
+        public void setClassObj(Class classObj) {
+            this.classObj = classObj;
+        }
+
+        public List<Method> getMethods() {
+            return methods;
+        }
+
+        public void addMethod(Method method) {
+            this.methods.add(method);
+        }
     }
 }

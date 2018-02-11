@@ -1,4 +1,4 @@
-package ru.performanceLab.yourNote.service.dao;
+package ru.performanceLab.yourNote.db.dao.cache;
 
 import org.springframework.stereotype.Service;
 
@@ -7,6 +7,7 @@ import java.util.Map;
 
 @Service
 public class Cache {
+    /*TODO: replace map by more acceptable limited collection?*/
     private Map<String, Object> cache = new HashMap<>();
 
     public Object getNote(String key) {

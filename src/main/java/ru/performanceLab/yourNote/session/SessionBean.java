@@ -1,4 +1,4 @@
-package ru.performanceLab.yourNote.scope;
+package ru.performanceLab.yourNote.session;
 
 import java.time.LocalTime;
 

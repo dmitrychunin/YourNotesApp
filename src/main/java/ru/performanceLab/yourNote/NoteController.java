@@ -4,11 +4,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-import ru.performanceLab.yourNote.model.Note;
-import ru.performanceLab.yourNote.model.User;
-import ru.performanceLab.yourNote.scope.SessionBean;
-import ru.performanceLab.yourNote.service.dao.NoteDao;
-import ru.performanceLab.yourNote.service.dao.UserDao;
+import ru.performanceLab.yourNote.db.model.Note;
+import ru.performanceLab.yourNote.db.model.User;
+import ru.performanceLab.yourNote.session.SessionBean;
+import ru.performanceLab.yourNote.db.dao.NoteDao;
+import ru.performanceLab.yourNote.db.dao.UserDao;
 
 @RestController
 public abstract class NoteController {

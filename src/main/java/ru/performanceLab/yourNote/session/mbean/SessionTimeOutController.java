@@ -1,4 +1,4 @@
-package ru.performanceLab.yourNote.mbean;
+package ru.performanceLab.yourNote.session.mbean;
 
 
 import java.time.temporal.ChronoUnit;

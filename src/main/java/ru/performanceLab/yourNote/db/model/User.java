@@ -1,4 +1,4 @@
-package ru.performanceLab.yourNote.model;
+package ru.performanceLab.yourNote.db.model;
 
 import javax.persistence.*;
 import java.io.Serializable;

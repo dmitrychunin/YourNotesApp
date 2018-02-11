@@ -1,9 +1,9 @@
-package ru.performanceLab.yourNote.repository;
+package ru.performanceLab.yourNote.db.repository;
 
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
-import ru.performanceLab.yourNote.model.Note;
-import ru.performanceLab.yourNote.model.User;
+import ru.performanceLab.yourNote.db.model.Note;
+import ru.performanceLab.yourNote.db.model.User;
 
 import java.util.List;
 

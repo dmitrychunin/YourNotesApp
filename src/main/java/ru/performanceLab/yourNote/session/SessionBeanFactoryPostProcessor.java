@@ -1,4 +1,4 @@
-package ru.performanceLab.yourNote.scope;
+package ru.performanceLab.yourNote.session;
 
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanFactoryPostProcessor;

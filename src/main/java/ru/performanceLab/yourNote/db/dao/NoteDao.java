@@ -1,7 +1,8 @@
-package ru.performanceLab.yourNote.service.dao;
+package ru.performanceLab.yourNote.db.dao;
 
-import ru.performanceLab.yourNote.model.Note;
-import ru.performanceLab.yourNote.model.User;
+import ru.performanceLab.yourNote.db.model.Note;
+import ru.performanceLab.yourNote.db.model.User;
+import ru.performanceLab.yourNote.db.dao.cache.CachedResult;
 
 import java.util.List;
 

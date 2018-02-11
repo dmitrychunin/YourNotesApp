@@ -1,11 +1,12 @@
-package ru.performanceLab.yourNote.service.dao;
+package ru.performanceLab.yourNote.db.dao;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ru.performanceLab.yourNote.model.Note;
-import ru.performanceLab.yourNote.model.User;
-import ru.performanceLab.yourNote.repository.NoteRepository;
-import ru.performanceLab.yourNote.repository.UserRepository;
+import ru.performanceLab.yourNote.db.model.Note;
+import ru.performanceLab.yourNote.db.model.User;
+import ru.performanceLab.yourNote.db.repository.NoteRepository;
+import ru.performanceLab.yourNote.db.repository.UserRepository;
+import ru.performanceLab.yourNote.db.dao.cache.CachedResult;
 
 import java.util.List;
 

@@ -6,7 +6,7 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Scope;
-import ru.performanceLab.yourNote.scope.SessionBean;
+import ru.performanceLab.yourNote.session.SessionBean;
 
 @SpringBootApplication
 public class Application extends SpringBootServletInitializer {

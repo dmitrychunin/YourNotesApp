@@ -1,9 +1,9 @@
-package ru.performanceLab.yourNote.service.dao;
+package ru.performanceLab.yourNote.db.dao;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ru.performanceLab.yourNote.model.User;
-import ru.performanceLab.yourNote.repository.UserRepository;
+import ru.performanceLab.yourNote.db.model.User;
+import ru.performanceLab.yourNote.db.repository.UserRepository;
 
 @Service
 public class UserDao {

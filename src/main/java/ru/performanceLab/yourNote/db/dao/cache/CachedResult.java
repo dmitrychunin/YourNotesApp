@@ -1,4 +1,4 @@
-package ru.performanceLab.yourNote.service.dao;
+package ru.performanceLab.yourNote.db.dao.cache;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
