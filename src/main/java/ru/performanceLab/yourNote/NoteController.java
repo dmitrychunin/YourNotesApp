@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import ru.performanceLab.yourNote.model.Note;
 import ru.performanceLab.yourNote.model.User;
 import ru.performanceLab.yourNote.scope.SessionBean;
 import ru.performanceLab.yourNote.service.dao.NoteDao;
@@ -66,7 +67,8 @@ public abstract class NoteController {
             return new ModelAndView("index", new ModelMap());
         }
 
-        noteDao.deleteNote(userName, noteName);
+        Note deletedNote = noteDao.getNote(userName, noteName);
+        noteDao.deleteNote(deletedNote);
         return getNotes(userName);
     }
 
@@ -79,7 +81,8 @@ public abstract class NoteController {
             return new ModelAndView("index", new ModelMap());
         }
 
-        noteDao.updateNote(userName, noteName, noteText);
+        Note updatedNote = noteDao.getNote(userName, noteName);
+        noteDao.updateNote(updatedNote, noteText);
         return getNotes(userName);
     }
 }
