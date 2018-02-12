@@ -10,6 +10,8 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 import java.util.*;
 
+import static ru.performanceLab.yourNote.Utils.isOneOfTheMethodsOverriden;
+
 @Service
 public class CachedResultAnnotatedBeanPostProcessor implements BeanPostProcessor {
     private Map<String, ClassInfoContainer> originalAnnotatedClasses = new HashMap<>();
@@ -45,11 +47,8 @@ public class CachedResultAnnotatedBeanPostProcessor implements BeanPostProcessor
         }
 
         InvocationHandler noteDaoCacheProxy = (Object proxy, Method method, Object[] args) -> {
-            /*
-            TODO:remove duplicated annotation in interface
-            interface method: method doesn't equals overriden class method: classInfo.getMethods().get(index)
-            */
-            if (method.getAnnotation(CachedResult.class) == null) {
+
+            if (!isOneOfTheMethodsOverriden(classInfo.getMethods(), method)) {
                 return method.invoke(bean, args);
             }
 

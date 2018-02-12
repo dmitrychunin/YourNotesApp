@@ -41,7 +41,6 @@ public class NoteDaoImpl implements NoteDao {
         noteRepository.save(note);
     }
 
-    /*TODO: add key types and count definitions*/
     @CachedResult
     @Override
     public Note getNote(String userName, String noteName) {
